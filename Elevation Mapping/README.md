@@ -25,5 +25,3 @@ Here are some potentially helpful Python packages for reading in and mapping dat
 * **Pyproj:** [https://pypi.org/project/pyproj/](https://pypi.org/project/pyproj/)
 
 What are we going to do with all this glorious height information? Whatever we like. Find the closest pub using cycle paths only. Work out how safe your house is from sealevel rises. Make cool designs for t-shirts automatically from a webscript. This’ll hopefully be a fun bit that develops as we go along.
-
-![alt text](sweden_contour_graphic.jpeg "Contour map of Sweden")

@@ -5,24 +5,25 @@ Created on Mon Nov 18 22:36:41 2019
 @author: chris
 
 Improvements to be made:
-- Use all 4 coordinate points to get an average dlon/dx and average dlat/dy 
-  which would be more accurate / correct the offset? 
+- Use all 4 coordinate points to get an average dlon/dx and average dlat/dy
+  which would be more accurate / correct the offset?
 """
 
 import datetime
+import os
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from PIL import Image
 
 # read in data
-path = "C:/Users/chris/Documents/Lunchtime_python/Python-Projects/Recreating John Snow's Ghost Map/datasets/"
-deaths = pd.read_csv(path + "deaths.csv") 
-pumps = pd.read_csv(path + "pumps.csv")
-dates = pd.read_csv(path + "dates.csv")
-d_p = pd.read_csv(path + "deaths_and_pumps.csv")
+path = os.getcwd()
+deaths = pd.read_csv(path + "\\Recreating John Snow's Ghost Map\\datasets\\deaths.csv")
+pumps = pd.read_csv(path + "\\Recreating John Snow's Ghost Map\\datasets\\pumps.csv")
+dates = pd.read_csv(path + "\\Recreating John Snow's Ghost Map\\datasets\\dates.csv")
+d_p = pd.read_csv(path + "\\Recreating John Snow's Ghost Map\\datasets\\deaths_and_pumps.csv")
 # load our saved OS map of london.
-OS_map = Image.open("C:/Users/chris/Documents/Lunchtime_python/Python-Projects/Recreating John Snow's Ghost Map/London_OS_map_1893_2.png")
+OS_map = Image.open(path + "\\Recreating John Snow's Ghost Map\\London_OS_map_1893_2.png")
 # Convert OS_map to an array to get exact coordinates
 arr = np.asarray(OS_map)
 # display the map
@@ -30,7 +31,7 @@ fig = plt.figure()
 ax = fig.add_subplot(111)
 ax.imshow(arr)
 
-# Using our figure, and the OS map found here: 
+# Using our figure, and the OS map found here:
 # https://maps.nls.uk/geo/explore/#zoom=16.023247652414494&lat=51.5130&lon=-0.1373&layers=163&b=1
 # We should define some reference points in order to scale our data onto the map.
 
@@ -77,3 +78,4 @@ pumps['y'] = im_xy[0][1] + pumps['dy'] # get y coordinate wrt reference point
 
 ax.scatter(pumps['x'],pumps['y'],s=25,c='b',marker='d', label = 'pump') # plot the death data
 ax.legend()
+plt.show()

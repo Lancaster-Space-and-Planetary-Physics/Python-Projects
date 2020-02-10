@@ -95,5 +95,27 @@ cbar.set_label('Height above sea level (m)')
 cbar.ax.tick_params(width=2)
 cbar.outline.set_linewidth(2)
 
-plt.savefig('elevation_mapping_example.png')
+# plt.savefig('elevation_mapping_example.png')
+plt.show()
+
+
+# ==============================================================================
+# try sub-sampling the image array and making a stylized, stacked line plot
+# This kinda works, but there needs to be some scaling of the height information
+# for the extents/aspect ratio of the map if it's going to be automated.
+
+data = np.flip(iom_elv,axis=0)
+dataf = data.astype('float64')
+dataf[dataf <= 0.] = np.nan
+data_h = dataf[::5]        # grab every 12th row
+lat_h  = lats[::5]
+print(f'data_h dims = {data_h.shape}')
+data_v = dataf[:, 1::5]    # grab 12th column
+print(f'data_v dims = {data_v.shape}')
+
+f2 = plt.figure(1)                                      # create figure canvas
+ax = f2.add_subplot(111)
+ax.set_facecolor('xkcd:sky blue')
+for ind in range(0,len(lat_h)):
+    plt.plot(lons, lat_h[ind]*10000. + data_h[ind,:],color='xkcd:off white',lw=.75)
 plt.show()

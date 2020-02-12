@@ -25,5 +25,6 @@ Here are some potentially helpful Python packages for reading in and mapping dat
 * **Cartopy:** [https://scitools.org.uk/cartopy](https://scitools.org.uk/cartopy)
 * **Rasterio:** [https://rasterio.readthedocs.io/en/latest/](https://rasterio.readthedocs.io/en/latest/)
 * **Pyproj:** [https://pypi.org/project/pyproj/](https://pypi.org/project/pyproj/)
+* **MPL cmocean:** [https://matplotlib.org/cmocean/#](https://matplotlib.org/cmocean/#)
 
 What are we going to do with all this glorious height information? Whatever we like. Find the closest pub using cycle paths only. Work out how safe your house is from sealevel rises. Make cool designs for t-shirts automatically from a webscript. This’ll hopefully be a fun bit that develops as we go along.

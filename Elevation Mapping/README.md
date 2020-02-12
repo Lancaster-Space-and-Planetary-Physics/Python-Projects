@@ -17,6 +17,8 @@ Here are some data sources to get you started:
 [https://data.gov.uk/](https://data.gov.uk/)
 * **DLR Microwaves and Radar Institute:** An example of land-use data that we could combine with elevation data. Radar-derived forest/non-forest maps. Raster map information on tree coverage and urbanised areas. No, I don’t know why the url is so dumb.
 [https://www.dlr.de/hr/en/desktopdefault.aspx/tabid-12538/21873_read-50027/](https://www.dlr.de/hr/en/desktopdefault.aspx/tabid-12538/21873_read-50027/)
+* **General Bathymetric Chart of the Oceans (GEBCO):** Dip your toe into the world of bathymetry. The ocean floor. Solve the mystery of the Bermuda triangle, find Atlantis etc.
+[https://www.gebco.net/data_and_products/gridded_bathymetry_data/](https://www.gebco.net/data_and_products/gridded_bathymetry_data/)
 
 Here are some potentially helpful Python packages for reading in and mapping data:
 * **Geopandas:** [http://geopandas.org](http://geopandas.org)

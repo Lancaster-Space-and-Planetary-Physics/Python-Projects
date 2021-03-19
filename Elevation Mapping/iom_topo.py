@@ -72,7 +72,7 @@ coast = cartopy.feature.GSHHSFeature(scale='high')      # hi-res coastline
 ax.add_feature(coast, edgecolor='black',linewidth=2)
 
 # contour plot:
-iomtopo = plt.contourf(lons,lats, np.flip(iom_elv,axis=0), cmap='terrain',
+iomtopo = ax.contourf(lons,lats, np.flip(iom_elv,axis=0), cmap='terrain',
                        levels=levels, extend=extend,
                        transform=cartopy.crs.PlateCarree())
 iomtopo.cmap.set_under('gray')                          # sea level colour
@@ -115,7 +115,15 @@ print(f'data_v dims = {data_v.shape}')
 
 f2 = plt.figure(1)                                      # create figure canvas
 ax = f2.add_subplot(111)
-ax.set_facecolor('xkcd:sky blue')
+ax.set_facecolor('xkcd:rust')
 for ind in range(0,len(lat_h)):
     plt.plot(lons, lat_h[ind]*10000. + data_h[ind,:],color='xkcd:off white',lw=.75)
+
+plt.annotate('ISLE OF MAN', (0.5,0.45), xycoords='axes fraction', ha='center',
+             fontfamily = 'Impact', weight = 'heavy', size= 40, color='xkcd:off white')
+# total fudge! - plot some lines over the text annotation
+lab_lats = np.linspace(544934 , 546230, 40)
+for i in range(0,40):
+    plt.axhline(lab_lats[i], color='xkcd:rust', lw = .75, zorder=4)
+
 plt.show()

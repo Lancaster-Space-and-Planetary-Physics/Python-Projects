@@ -31,7 +31,7 @@ survived = np.array(train_data['Survived'])
 
 survivors = np.where(survived == 1) #this returns the indices where someone survived
 
-non_survivors = np.where(survived == 0) #this returns the indices where someone survived
+non_survivors = np.where(survived == 0) #this returns the indices where someone died
 
 sexes = np.array(train_data['Sex'])
 

@@ -17,11 +17,17 @@ Here are some data sources to get you started:
 [https://data.gov.uk/](https://data.gov.uk/)
 * **DLR Microwaves and Radar Institute:** An example of land-use data that we could combine with elevation data. Radar-derived forest/non-forest maps. Raster map information on tree coverage and urbanised areas. No, I don’t know why the url is so dumb.
 [https://www.dlr.de/hr/en/desktopdefault.aspx/tabid-12538/21873_read-50027/](https://www.dlr.de/hr/en/desktopdefault.aspx/tabid-12538/21873_read-50027/)
+* **General Bathymetric Chart of the Oceans (GEBCO):** Dip your toe into the world of bathymetry. The ocean floor. Solve the mystery of the Bermuda triangle, find Atlantis etc.
+[https://www.gebco.net/data_and_products/gridded_bathymetry_data/](https://www.gebco.net/data_and_products/gridded_bathymetry_data/)
 
 Here are some potentially helpful Python packages for reading in and mapping data:
 * **Geopandas:** [http://geopandas.org](http://geopandas.org)
 * **Cartopy:** [https://scitools.org.uk/cartopy](https://scitools.org.uk/cartopy)
 * **Rasterio:** [https://rasterio.readthedocs.io/en/latest/](https://rasterio.readthedocs.io/en/latest/)
 * **Pyproj:** [https://pypi.org/project/pyproj/](https://pypi.org/project/pyproj/)
+
+And finally some colourmap sources:
+* **MPL cmocean:** [https://matplotlib.org/cmocean/#](https://matplotlib.org/cmocean/#)
+* **Palettable:** [https://jiffyclub.github.io/palettable/](https://jiffyclub.github.io/palettable/)
 
 What are we going to do with all this glorious height information? Whatever we like. Find the closest pub using cycle paths only. Work out how safe your house is from sealevel rises. Make cool designs for t-shirts automatically from a webscript. This’ll hopefully be a fun bit that develops as we go along.

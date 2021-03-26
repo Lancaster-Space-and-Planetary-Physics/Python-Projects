@@ -90,9 +90,6 @@ plt.legend()
 plt.show()
 
 
-
-
-
 # # Example plot: Passenger class versus Fare paid.
 # train_df.plot.scatter(x="Pclass", y="Fare")
 # plt.show()

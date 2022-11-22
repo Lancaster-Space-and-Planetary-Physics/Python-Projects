@@ -13,6 +13,7 @@
 
 # === Joe Kinrade - 18 Nov 2022 ================================================
 import numpy as np
+import time
 
 # --- Pool of 32 FIFA World cup teams ------------------------------------------
 n_teams = 32
@@ -78,4 +79,12 @@ for i in range(remain):
     
 
 # --- Print result to screen ---------------------------------------------------
-[print(player, sweep_teams[player]) for player in sweep_teams.keys()]
+for player in sweep_teams.keys():
+    print(player)
+    time.sleep(2)
+    player_teams = sweep_teams[player]
+    for team in player_teams:
+        time.sleep(2)
+        print(team)
+    print("\n")
+    

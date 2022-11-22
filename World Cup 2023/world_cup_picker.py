@@ -49,13 +49,13 @@ remain = n_teams % n_players                # number of teams left after filling
 teams_ranked = teams[np.argsort(rankings)]	# list of teams sorted by ranking
 
 #create array of pools (excluding spare teams)
-pools = np.empty([n_pools,n_players], dtype="S20")
+pools = np.empty([n_pools,n_players], dtype="U12")
 for i in range(n_pools):                    # row 0 = top teams, row_n = worst teams
     pools[i] = teams_ranked[i*n_players:(i+1)*n_players]
 ranks = np.reshape(np.arange(n_pools*n_players), [n_pools,n_players])    
 
 # --- Fill a names x teams array (n_pools, n_players) by selecting random teams from each tier
-draft_teams = np.empty([n_pools,n_players], dtype='S20')
+draft_teams = np.empty([n_pools,n_players], dtype='U12')
 draft_ranks = np.empty([n_pools,n_players], dtype=int)
 
 for i in range(0,n_pools):                  # loop over each tier 1-n_pools
@@ -76,13 +76,14 @@ player_rankings = np.array([sweep_ranks[player] for player in sweep_ranks.keys()
 player_names = np.array([player for player in sweep_ranks.keys()])                 # names assigned to those ranks
 rank_order = np.argsort(player_rankings)                                           # get order of ranking
 player_names = player_names[rank_order]                                            # order players by cumulative ranking
-for i in range(remain):
+for i in range(1, remain+1):
     sweep_teams[player_names[-i]].append(teams_ranked[-i])                         # assign extra teams to players with worst cumulative ranking
     
 
 # --- Print result to screen ---------------------------------------------------
 for player in sweep_teams.keys():
     print(player)
+    print("-----")
     time.sleep(2)
     player_teams = sweep_teams[player]
     for team in player_teams:

@@ -37,28 +37,45 @@ rankings = [50,44,18,8,                                 # group A
 		    9,61,14,28]								    # group H
 
 #  --- Players in the hat (must be 8 at the moment) ----------------------------
-players = ['joe','diego','elliott','george','cameron','hannah','maria','yan']
-n_players = int(len(players))
+players = ['joe','diego','elliott','george','cameron','hannah','maria']
+n_players = len(players)
 
 #  --- Sort teams into pools by world ranking ----------------------------------
-n_pools = int(n_teams / n_players)			# 32 teams / 8 players  = 4 ranked pools
+n_pools = int(n_teams / n_players)			# 32 teams / n players  = x ranked pools
+remain = n_teams % n_players                # number of teams left after filling pools
 teams_ranked = teams[np.argsort(rankings)]	# list of teams sorted by ranking
 
-gold =   teams_ranked[0:8]                  # Gold pool
-silver = teams_ranked[8:16]                 # Silver pool
-bronze = teams_ranked[16:24]                # Bronze pool
-poop =   teams_ranked[24:32]                # Poop pool
+#create array of pools (excluding spare teams)
+pools = np.empty([n_pools,n_players], dtype="S20")
+for i in range(n_pools):                    # row 0 = top teams, row_n = worst teams
+    pools[i] = teams_ranked[i*n_players:(i+1)*n_players]
+ranks = np.reshape(np.arange(n_pools*n_players), [n_pools,n_players])    
 
-pools = np.vstack([gold,silver,bronze,poop])
+# --- Fill a names x teams array (n_pools, n_players) by selecting random teams from each tier
+draft_teams = np.empty([n_pools,n_players], dtype='S20')
+draft_ranks = np.empty([n_pools,n_players], dtype=int)
 
-# --- Fill a names x teams array (8x4) by selecting random teams from each tier
-draft = np.empty([n_pools,n_players], dtype='S20')
+for i in range(0,n_pools):                  # loop over each tier 1-n_pools
+    randoms = np.random.rand(n_players)	    # n_player random numbers between 0-1
+    rand_ind = np.argsort(randoms)          # index that would sort these random ints
+    draft_teams[i,:] = pools[i,rand_ind]    # assign random teams from current tier
+    draft_ranks[i,:] = ranks[i,rand_ind]    # and assign ranks for those teams
 
-for i in range(0,4):                         # loop over each tier 1-4
-    randoms = np.random.rand(8)			     # 8 random numbers between 0-1
-    rand_ind = list(np.argsort(randoms))     # index that would sort these random ints
-    draft[i,:] = pools[i,rand_ind]		     # assign random teams from current tier
+# --- Create sweepstake ---
+sweep_teams = dict()
+sweep_ranks = dict()                                   # tally world rankings
+for i, player in enumerate(players):               
+    sweep_teams[player] = list(draft_teams[:,i])       # assign teams to player
+    sweep_ranks[player] = np.sum(draft_ranks[:,i])     # cumulative rankings assigned to player
+    
+# --- assign remaining teams to players with highest cumulative rankings ---
+player_rankings = np.array([sweep_ranks[player] for player in sweep_ranks.keys()]) # ranks assigned to players
+player_names = np.array([player for player in sweep_ranks.keys()])                 # names assigned to those ranks
+rank_order = np.argsort(player_rankings)                                           # get order of ranking
+player_names = player_names[rank_order]                                            # order players by cumulative ranking
+for i in range(remain):
+    sweep_teams[player_names[-i]].append(teams_ranked[-i])                         # assign extra teams to players with worst cumulative ranking
+    
 
 # --- Print result to screen ---------------------------------------------------
-picks = np.vstack([players,draft]).T
-[print(*line) for line in picks]
+[print(player, sweep_teams[player]) for player in sweep_teams.keys()]

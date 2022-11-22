@@ -7,11 +7,13 @@
 
 # TO DO:
 # - webscrape FIFA World Cup Groups and Rankings
-# - adapt this for any number of players (up to 32). Uneven number of team
-#   allocations must come randomly from lower pool teams. i.e. if someone has 3
-#   teams, versus everyone else having 2, it must be a lower-ranked extra team.
 
-# === Joe Kinrade - 18 Nov 2022 ================================================
+# UPDATED 22 Nov 2022: Elliott added ability to input any number of players.
+# Uneven number of team allocations must come randomly from lower rank teams.
+# e.g. if someone has 3 teams, versus everyone else having 2, it must be a
+# lower-ranked extra.
+
+# === Joe Kinrade / Elliott Day - 18 Nov 2022 ==================================
 import numpy as np
 import time
 
@@ -37,12 +39,11 @@ rankings = [50,44,18,8,                                 # group A
 		    1,21,15,43,								    # group G
 		    9,61,14,28]								    # group H
 
-#  --- Players in the hat (must be 8 at the moment) ----------------------------
-players = ['joe','diego','elliott','george','cameron','hannah','maria']
+#  --- Players in the hat ------------------------------------------------------
+players = ['ade','cameron','diego','elliott','george','hannah','joe','maria']
 n_players = len(players)
 
 np.random.seed(0)
-
 
 #  --- Sort teams into pools by world ranking ----------------------------------
 n_pools = int(n_teams / n_players)			# 32 teams / n players  = x ranked pools
@@ -53,7 +54,7 @@ teams_ranked = teams[np.argsort(rankings)]	# list of teams sorted by ranking
 pools = np.empty([n_pools,n_players], dtype="U12")
 for i in range(n_pools):                    # row 0 = top teams, row_n = worst teams
     pools[i] = teams_ranked[i*n_players:(i+1)*n_players]
-ranks = np.reshape(np.arange(n_pools*n_players), [n_pools,n_players])    
+ranks = np.reshape(np.arange(n_pools*n_players), [n_pools,n_players])
 
 # --- Fill a names x teams array (n_pools, n_players) by selecting random teams from each tier
 draft_teams = np.empty([n_pools,n_players], dtype='U12')
@@ -65,21 +66,20 @@ for i in range(0,n_pools):                  # loop over each tier 1-n_pools
     draft_teams[i,:] = pools[i,rand_ind]    # assign random teams from current tier
     draft_ranks[i,:] = ranks[i,rand_ind]    # and assign ranks for those teams
 
-# --- Create sweepstake ---
+# --- Create sweepstake --------------------------------------------------------
 sweep_teams = dict()
 sweep_ranks = dict()                                   # tally world rankings
-for i, player in enumerate(players):               
+for i, player in enumerate(players):
     sweep_teams[player] = list(draft_teams[:,i])       # assign teams to player
     sweep_ranks[player] = np.sum(draft_ranks[:,i])     # cumulative rankings assigned to player
-    
-# --- assign remaining teams to players with highest cumulative rankings ---
+
+# --- assign remaining teams to players with highest cumulative rankings -------
 player_rankings = np.array([sweep_ranks[player] for player in sweep_ranks.keys()]) # ranks assigned to players
 player_names = np.array([player for player in sweep_ranks.keys()])                 # names assigned to those ranks
 rank_order = np.argsort(player_rankings)                                           # get order of ranking
 player_names = player_names[rank_order]                                            # order players by cumulative ranking
 for i in range(1, remain+1):
     sweep_teams[player_names[-i]].append(teams_ranked[-i])                         # assign extra teams to players with worst cumulative ranking
-    
 
 # --- Print result to screen ---------------------------------------------------
 for player in sweep_teams.keys():
@@ -91,4 +91,3 @@ for player in sweep_teams.keys():
         time.sleep(2)
         print(team)
     print("\n")
-    

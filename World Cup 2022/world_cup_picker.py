@@ -43,7 +43,8 @@ rankings = [50,44,18,8,                                 # group A
 players = ['ade','cameron','diego','elliott','george','hannah','joe','maria']
 n_players = len(players)
 
-np.random.seed(0)
+# Enable seed to reproduce a fixed run.
+# np.random.seed(0)
 
 #  --- Sort teams into pools by world ranking ----------------------------------
 n_pools = int(n_teams / n_players)			# 32 teams / n players  = x ranked pools
@@ -82,6 +83,13 @@ for i in range(1, remain+1):
     sweep_teams[player_names[-i]].append(teams_ranked[-i])                         # assign extra teams to players with worst cumulative ranking
 
 # --- Print result to screen ---------------------------------------------------
+print('Connecting to HEC...')
+time.sleep(1)
+print('Connection established.')
+print('Allocating processors...')
+time.sleep(1)
+print('Running sweep sequence...')
+
 for player in sweep_teams.keys():
     print(player)
     print("-----")
@@ -91,3 +99,7 @@ for player in sweep_teams.keys():
         time.sleep(2)
         print(team)
     print("\n")
+
+print('Closing connection...')
+time.sleep(1)
+print('Session ended. Thank you for using HEC. Have a nice day.')

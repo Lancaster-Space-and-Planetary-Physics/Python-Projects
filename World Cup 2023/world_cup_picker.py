@@ -38,7 +38,7 @@ rankings = [50,44,18,8,                                 # group A
 
 #  --- Players in the hat (must be 8 at the moment) ----------------------------
 players = ['joe','diego','elliott','george','cameron','hannah','maria','yan']
-n_players = int(len(players))
+n_players = len(players)
 
 #  --- Sort teams into pools by world ranking ----------------------------------
 n_pools = int(n_teams / n_players)			# 32 teams / 8 players  = 4 ranked pools

@@ -43,6 +43,7 @@ n_players = len(players)
 
 np.random.seed(0)
 
+
 #  --- Sort teams into pools by world ranking ----------------------------------
 n_pools = int(n_teams / n_players)			# 32 teams / n players  = x ranked pools
 remain = n_teams % n_players                # number of teams left after filling pools
